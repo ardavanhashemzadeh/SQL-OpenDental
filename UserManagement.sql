@@ -1,3 +1,8 @@
+/*
+** Ardavan Hashemzadeh
+** September 5 2017
+** Insert or Update OD user
+*/
 SET @olduname='';
 SET @username='';
 SET @password='';
