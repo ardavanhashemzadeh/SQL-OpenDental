@@ -40,9 +40,9 @@ VALUES(@but2,1,@defnum,@img2);
 INSERT INTO procbutton(Description, ItemOrder, Category, ButtonImage)
 VALUES(@but3,2,@defnum,@img3);
 
-SET @but1num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but1);
-SET @but2num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but2);
-SET @but3num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but3);
+SET @but1num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but1 LIMIT 1);
+SET @but2num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but2 LIMIT 1);
+SET @but3num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but3 LIMIT 1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
 SELECT @but1num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but1proc1);
@@ -52,3 +52,10 @@ SELECT @but2num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but2proc1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
 SELECT @but3num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but3proc1);
+
+SELECT d.ItemName AS Category, pb.Description, pc.proccode FROM procbuttonitem pbi
+JOIN procbutton pb ON pbi.procbuttonnum=pb.procbuttonnum
+JOIN definition d ON pb.category=d.defnum
+JOIN procedurecode pc ON pc.codenum=pbi.codenum
+WHERE d.itemname LIKE @category
+ORDER BY d.ItemName, pb.Description, pc.ProcCode;
