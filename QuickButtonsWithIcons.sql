@@ -19,17 +19,11 @@ SET @img1="iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAQMAAAC3R49OAAAAAXNSR0IArs4c6QAAAARnQ
 SET @img2="iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAQMAAAC3R49OAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZQTFRFAAAA////pdmf3QAAAAlwSFlzAAAOwgAADsIBFShKgAAAAEFJREFUGNNj+M//geHHxw8M3/99YHj/v4Dh/v8NDHs+X2DYnXsBTNf/fwDB6yH0/v8XwHgP8wWwWpAekF6QGUCzAIz4MBpOEmb4AAAAAElFTkSuQmCC";
 SET @img3="iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAQMAAAC3R49OAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZQTFRFAAAA////pdmf3QAAAAlwSFlzAAAOwgAADsIBFShKgAAAAEhJREFUGNNj+M//geHHxw8M3/99YHj/v4Dh/v8NDHs+X2DYnXsBTNf/fwDB6yH0/v8XGPaxX2DY+/sCw+2/G8B6QHpBZgDNAgCIpDAUzlrhIwAAAABJRU5ErkJggg==";
 
-/* Delete existing procedure buttons */
-
-DELETE FROM procbuttonitem pbi
+/* Delete existing procedure buttons and category */
+DELETE pbi, pb, d FROM procbuttonitem pbi
 JOIN procbutton pb ON pbi.procbuttonnum=pb.procbuttonnum
 JOIN definition d ON pb.category=d.defnum
-JOIN procedurecode pc ON pc.codenum=pbi.codenum
-WHERE d.itemname LIKE CONCAT("%",@category,"%");
-
-
-/* Hide existing ProcButtonCategory if it exists */
-/* UPDATE definition SET ishidden=1 WHERE category=26 AND itemname LIKE CONCAT("%",@category,"%"); */
+WHERE d.itemname LIKE @category;
 
 INSERT INTO definition(category,itemorder,itemname)
 SELECT * FROM (SELECT 26,1+MAX(ItemOrder),@category FROM definition WHERE category=26) a
