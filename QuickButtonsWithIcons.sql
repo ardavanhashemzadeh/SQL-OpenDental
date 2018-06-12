@@ -45,10 +45,10 @@ SET @but2num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but2);
 SET @but3num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but3);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
-SELECT @but1num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but1);
+SELECT @but1num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but1proc1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
-SELECT @but2num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but2);
+SELECT @but2num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but2proc1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
-SELECT @but3num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but3);
+SELECT @but3num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but3proc1);
