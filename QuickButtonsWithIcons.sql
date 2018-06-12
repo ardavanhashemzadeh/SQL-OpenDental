@@ -45,13 +45,13 @@ SET @but2num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but2 LIMIT
 SET @but3num=(SELECT ProcButtonNum FROM procbutton WHERE description=@but3 LIMIT 1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
-SELECT @but1num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but1proc1);
+SELECT @but1num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but1proc1 LIMIT 1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
-SELECT @but2num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but2proc1);
+SELECT @but2num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but2proc1 LIMIT 1);
 
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
-SELECT @but3num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but3proc1);
+SELECT @but3num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but3proc1 LIMIT 1);
 
 SELECT d.ItemName AS Category, pb.Description, pc.proccode FROM procbuttonitem pbi
 JOIN procbutton pb ON pbi.procbuttonnum=pb.procbuttonnum
