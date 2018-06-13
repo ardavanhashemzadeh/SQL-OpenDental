@@ -27,9 +27,9 @@ WHERE d.itemname LIKE @category;
 
 INSERT INTO definition(category,itemorder,itemname)
 SELECT * FROM (SELECT 26,1+MAX(ItemOrder),@category FROM definition WHERE category=26) a
-WHERE (SELECT defnum FROM definition WHERE category=26 AND itemname LIKE CONCAT("%",@category,"%") LIMIT 1) IS NULL;
+WHERE (SELECT defnum FROM definition WHERE category=26 AND itemname LIKE CONCAT("%",@category,"%")) IS NULL;
 
-UPDATE definition SET itemname=@category WHERE category=26 AND itemname LIKE CONCAT("%",@category,"%") LIMIT 1;
+UPDATE definition SET itemname=@category WHERE category=26 AND itemname LIKE CONCAT("%",@category,"%");
 
 SET @defnum=(SELECT defnum FROM definition WHERE category=26 AND itemname=@category LIMIT 1);
 
