@@ -14,7 +14,7 @@ SET @CarrierNameLike = "Liberty Dent%",
 @ElectID = "CX083";
 
 INSERT INTO carrier(CarrierName)
-SELECT @CarrierName FROM (SELECT "String") FillerTable WHERE (
+SELECT @CarrierName FROM (SELECT NULL) PlaceHolder WHERE (
 SELECT CarrierName FROM carrier WHERE CarrierName LIKE @CarrierNameLike LIMIT 1) IS NULL;
 
 UPDATE carrier SET
