@@ -15,7 +15,7 @@ SET @CarrierNameLike = "Liberty Dent%",
 
 INSERT INTO carrier(CarrierName)
 SELECT @CarrierName FROM (SELECT "String") FillerTable WHERE (
-SELECT CarrierName FROM carrier WHERE CarrierName LIKE @CarrierNameLike) IS NULL;
+SELECT CarrierName FROM carrier WHERE CarrierName LIKE @CarrierNameLike LIMIT 1) IS NULL;
 
 UPDATE carrier SET
 CarrierName = @CarrierName,
