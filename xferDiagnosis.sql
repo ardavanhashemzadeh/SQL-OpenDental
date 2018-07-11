@@ -1,11 +1,11 @@
-/* EXPORT DATA */
-/* Export data from source */
-SELECT ItemOrder, ItemName, ItemValue FROM definition WHERE Category=16 AND isHidden=0 INTO OUTFILE "\\\\serveroheight\\share\\rdtempdefs04052018.txt";
-
-/* IMPORT DATA */
 /* Define variables */
 SET @Category=16;
 
+/* EXPORT DATA */
+/* Export data from source */
+SELECT ItemOrder, ItemName, ItemValue FROM definition WHERE Category=@Category AND isHidden=0 INTO OUTFILE "\\\\serveroheight\\share\\rdtempdefs04052018.txt";
+
+/* IMPORT DATA */
 /* Clean up the unused definitions and its temporary table */
 DROP TABLE IF EXISTS rduseddefs;
 CREATE TABLE rduseddefs(DefNum bigint(20));
