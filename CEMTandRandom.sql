@@ -58,7 +58,9 @@ AND usernum NOT IN (SELECT DISTINCT UserNum FROM vaccinedef)
 AND usernum NOT IN (SELECT DISTINCT UserNum FROM wikilisthist)
 AND usernum NOT IN (SELECT DISTINCT UserNum FROM wikipage)
 AND usernum NOT IN (SELECT DISTINCT UserNum FROM wikipagehist);
+SELECT ROW_COUNT();
 DELETE FROM usergroupattach WHERE usernum NOT IN (SELECT DISTINCT UserNum FROM userod);
+SELECT ROW_COUNT();
 
 /* Find all user and group information about a few specific users */
 SELECT * FROM userod u LEFT JOIN usergroupattach uga ON u.usernum=uga.usernum
