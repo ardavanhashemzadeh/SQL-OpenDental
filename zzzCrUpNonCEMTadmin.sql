@@ -12,3 +12,6 @@ SELECT uo.usernum, uo.usergroupnum FROM userod uo
 LEFT JOIN usergroupattach uga ON uo.usernum=uga.usernum AND uo.usergroupnum=uga.usergroupnum
 WHERE username LIKE "Show CEMT Users"
 AND uga.usernum IS NULL;
+
+/* Alert the app of the changes */
+INSERT INTO signalod(SigDateTime,IType,FKeyType) VALUES(NOW(),19,"Undefined");
