@@ -4,12 +4,12 @@
     who are due for recare
 */
 
-SELECT patnum, pat, age
+SELECT patnum, patname, TIMESTAMPDIFF(YEAR,birthdate,CURDATE()) AS age
 FROM (
-  SELECT patnum,
-  TIMESTAMPDIFF(YEAR,birthdate,CURDATE()) AS age,
-  CONCAT(fname, " ", lname) AS pat,
+  SELECT patnum, birthdate,
+  CONCAT(fname, " ", lname) AS patname,
   MAX(aptdatetime) AS LastApt
-  FROM appointment NATURAL JOIN patient) a
+  FROM appointment NATURAL JOIN patient
+  GROUP BY patnum) a
 WHERE DATE(LastApt) <= DATE_SUB(now(), INTERVAL 6 MONTH)
-AND age <= 3;
+AND TIMESTAMPDIFF(YEAR,birthdate,CURDATE()) <= 3;
