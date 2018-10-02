@@ -12,3 +12,6 @@ WHERE username LIKE @username
 AND uga.usernum IS NULL;
 
 SELECT ishidden, username, password, description FROM userod NATURAL LEFT JOIN usergroup WHERE username LIKE @username;
+
+
+
