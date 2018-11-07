@@ -16,15 +16,8 @@ SELECT patnum, LastAppointment FROM (
 	SELECT pl.patnum, MAX(aptdatetime) AS LastAppointment FROM procedurelog pl
 	JOIN procedurecode pc ON pl.codenum=pc.codenum
 	LEFT JOIN appointment a ON pl.patnum=a.patnum
-	WHERE pc.proccode IN ("D2930", "D2931", "D2933", "D2934",
-		"D3220", "D3230", "D3240",
-		"D1351", "D1354",
-		"D1510", "D1515",
-		"D7140",
-		"D2330", "D2331", "D2332", "D2335",
-		"D2391", "D2392", "D2393", "D2394")
-	AND procstatus=1
+	WHERE procstatus=1
 	GROUP BY pl.patnum) a
-WHERE (LastAppointment <= NOW() OR LastAppointment IS NULL)
+WHERE (LastAppointment BETWEEN DATE_SUB(NOW(), INTERVAL 3 YEAR) AND NOW() OR LastAppointment IS NULL)
 ORDER BY LastAppointment DESC
 LIMIT 100;
