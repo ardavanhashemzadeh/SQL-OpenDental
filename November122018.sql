@@ -77,9 +77,6 @@ ORDER BY LastAppointment DESC
 */
 
 
-
-
-
 /*  Ardavan Hashemzadeh
     November 12 2018
     List of patients with Spacemaintainer Impression Appointment is not made
@@ -87,6 +84,7 @@ ORDER BY LastAppointment DESC
 */
 SET @MinAge=0;
 SET @MaxAge=3;
+SET @ProcList='|D1510|D1515|D1520|D1525|D1550|D1555|D1575|';
 
 SELECT patnum, Age, LastAppointment FROM (
         SELECT pl.patnum, YEAR(NOW())-YEAR(Birthdate) AS Age, MAX(aptdatetime) AS LastAppointment
@@ -94,6 +92,7 @@ SELECT patnum, Age, LastAppointment FROM (
         JOIN procedurelog pl ON p.patnum=pl.patnum
         JOIN procedurecode pc ON pc.codenum=pl.codenum
         LEFT JOIN appointment a ON pl.patnum=a.patnum
+        WHERE @ProcList NOT LIKE CONCAT('%|', pc.proccode, '%|')
         GROUP BY pl.patnum) a
 WHERE (LastAppointment <= NOW() OR LastAppointment IS NULL)
 AND Age BETWEEN @MinAge AND @MaxAge
@@ -104,3 +103,6 @@ ORDER BY LastAppointment DESC
 *
 *
 */
+
+
+
