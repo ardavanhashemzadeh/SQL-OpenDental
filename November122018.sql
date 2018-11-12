@@ -91,8 +91,8 @@ SET @MaxAge=3;
 SELECT patnum, Age, LastAppointment FROM (
         SELECT pl.patnum, YEAR(NOW())-YEAR(Birthdate) AS Age, MAX(aptdatetime) AS LastAppointment
         FROM patient p
-        JOIN procedurecode pc ON pc.codenum=pl.proccode
         JOIN procedurelog pl ON p.patnum=pl.patnum
+        JOIN procedurecode pc ON pc.codenum=pl.codenum
         LEFT JOIN appointment a ON pl.patnum=a.patnum
         GROUP BY pl.patnum) a
 WHERE (LastAppointment <= NOW() OR LastAppointment IS NULL)
