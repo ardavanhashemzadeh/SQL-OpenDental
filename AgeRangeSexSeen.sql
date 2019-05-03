@@ -11,7 +11,7 @@ SELECT Gender,
 SUM(IF(Age BETWEEN 0 AND 4,TheCount,0)) AS '0-4',
 SUM(IF(Age BETWEEN 5 AND 6,TheCount,0)) AS '5-6',
 SUM(IF(Age BETWEEN 7 AND 8,TheCount,0)) AS '7-8',
-SUM(IF(Age > 8,TheCount,0)) AS '8+' FROM
+SUM(IF(Age > 8,TheCount,0)) AS '9+' FROM
 (
 SELECT Age, COUNT(Age) AS TheCount, Gender FROM 
 (
