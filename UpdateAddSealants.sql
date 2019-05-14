@@ -29,7 +29,7 @@ IsRadiology,
 BypassGlobalLock
 )
 SELECT NewCode.* FROM (SELECT
-"D1353F" AS ProcCode,
+"D1351F" AS ProcCode,
 "Sealant - Fuji - Per Tooth" AS Descript,
 "Fuji Seal" AS AbbrDesc,
 "/X/" AS ProcTime,
