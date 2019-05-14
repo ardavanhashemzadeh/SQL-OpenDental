@@ -28,29 +28,30 @@ CanadaTimeUnits,
 IsRadiology,
 BypassGlobalLock
 )
-VALUES(
-"D1353F", -- ProcCode,
-"Sealant - Fuji - Per Tooth", -- Descript,
-"Fuji Seal", -- AbbrDesc,
-"/X/", -- ProcTime,
-@ProcCat, -- ProcCat,
-2, -- TreatArea,
-0, -- NoBillIns,
-0, -- IsProsth,
-"Bla Bla Bla", -- DefaultNote,
-1, -- IsHygiene,
-11, -- GTypeNum,
-0, -- IsTaxed,
-13, -- PaintType,
--6291971, -- GraphicColor,
-0, -- IsCanadianLab,
-1, -- PreExisting,
-0, -- BaseUnits,
-0, -- SubstOnlyIf,
-0, -- IsMultiVisit,
-0, -- ProvNumDefault,
-1, -- CanadaTimeUnits,
-0, -- IsRadiology,
-0 -- BypassGlobalLock
-)
-
+SELECT NewCode.* FROM (SELECT
+"D1353F" AS ProcCode,
+"Sealant - Fuji - Per Tooth" AS Descript,
+"Fuji Seal" AS AbbrDesc,
+"/X/" AS ProcTime,
+@ProcCat AS ProcCat,
+2 AS TreatArea,
+0 AS NoBillIns,
+0 AS IsProsth,
+"TEETH WERE ISOLATED, CHECKED FOR CARIES FREE STATUS ON SURFACE TO BE SEALED.  TWO STEP BONDING USED: 38% PHOSPHORIC ACID USED TO ETCH SURFACE,  AND PLACED BONDING RESIN.  SEALANTS APPLIED AND CURED TO ALLOCATED TOOTH. CHECKED FOR SMOOTHNESS. MOUTH FULLY IRRIGATED POST-TREATMENT." AS DefaultNote,
+1 AS IsHygiene,
+11 AS GTypeNum,
+0 AS IsTaxed,
+13 AS PaintType,
+-6291971 AS GraphicColor,
+0 AS IsCanadianLab,
+1 AS PreExisting,
+0 AS BaseUnits,
+0 AS SubstOnlyIf,
+0 AS IsMultiVisit,
+0 AS ProvNumDefault,
+1 AS CanadaTimeUnits,
+0 AS IsRadiology,
+0 AS BypassGlobalLock
+) NewCode
+LEFT JOIN procedurecode OldCode USING(ProcCode)
+WHERE OldCode.ProcCode IS NULL
