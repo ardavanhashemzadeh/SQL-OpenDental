@@ -1,10 +1,9 @@
--- Work in progrss
-
 -- Update existing sealant code to state "SealRite" brand
 UPDATE procedurecode SET Descript="Sealant - SealRite - Per Tooth", AbbrDesc="SealRite Seal" WHERE ProcCode="D1351";
 
 -- Inform OD of the change
-INSERT INTO signalod (DateViewing,SigDateTime,FKey,FKeyType,IType,RemoteRole,MsgValue) VALUES('0001-01-01',NOW(),0,'Undefined',4,0,'');
+SET @DTS=(SELECT NOW());
+INSERT INTO signalod (DateViewing,SigDateTime,FKey,FKeyType,IType,RemoteRole,MsgValue) VALUES('0001-01-01',@DTS,0,'Undefined',4,0,'');
 
 -- Insert new code for "Fuji" brand
 SET @ProcCat=(SELECT ProcCat FROM procedurecode WHERE ProcCode="D1351" LIMIT 1);
@@ -62,18 +61,24 @@ LEFT JOIN procedurecode OldCode USING(ProcCode)
 WHERE OldCode.ProcCode IS NULL;
 
 -- Inform OD of the change
-INSERT INTO signalod (DateViewing,SigDateTime,FKey,FKeyType,IType,RemoteRole,MsgValue) VALUES('0001-01-01',NOW(),0,'Undefined',4,0,'');
+SET @DTS=(SELECT NOW());
+INSERT INTO signalod (DateViewing,SigDateTime,FKey,FKeyType,IType,RemoteRole,MsgValue) VALUES('0001-01-01',@DTS,0,'Undefined',4,0,'');
 
 -- Copy fees from existing code
 INSERT INTO fee(Amount, OldCode, FeeSched, UseDefaultFee, UseDefaultCov, CodeNum, ClinicNum, ProvNum)
 SELECT NewFee.* FROM (SELECT Amount, OldCode, FeeSched, UseDefaultFee, UseDefaultCov, (SELECT CodeNum FROM procedurecode WHERE ProcCode = "D1351F" LIMIT 1) AS CodeNum, ClinicNum, ProvNum FROM fee WHERE CodeNum=(SELECT CodeNum FROM procedurecode WHERE ProcCode="D1351")) NewFee
-LEFT JOIN (SELECT Amount, OldCode, FeeSched, UseDefaultFee, UseDefaultCov, (SELECT CodeNum FROM procedurecode WHERE ProcCode = "D1351F" LIMIT 1) AS CodeNum, ClinicNum, ProvNum FROM fee WHERE CodeNum=(SELECT CodeNum FROM procedurecode WHERE ProcCode="D1351")) OldFee
+LEFT JOIN (SELECT FeeSched, CodeNum FROM fee WHERE CodeNum IN (SELECT CodeNum FROM procedurecode WHERE ProcCode="D1351F")) OldFee
 USING(FeeSched,CodeNum) WHERE OldFee.CodeNum IS NULL;
 
 
 -- Inform OD of the change
+SET @DTS=(SELECT NOW());
 INSERT INTO signalod (DateViewing,SigDateTime,FKey,FKeyType,IType,RemoteRole,MsgValue)
-SELECT DISTINCT '0001-01-01',FeeSched,0,'Undefined',4,0,''
-FROM fee WHERE CodeNum=(SELECT CodeNum FROM procedurecode WHERE ProcCode="D1351F");
-
-
+SELECT DISTINCT '0001-01-01' AS DateViewing,
+@DTS AS SigDateTime,
+FeeSched AS FKey,
+'FeeSched' AS FKeyType,
+16 AS IType,
+0 AS RemoteRole,
+'' AS MsgValue
+FROM fee WHERE CodeNum IN (SELECT CodeNum FROM procedurecode WHERE ProcCode="D1351F");
