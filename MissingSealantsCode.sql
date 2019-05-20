@@ -29,7 +29,7 @@ IsRadiology,
 BypassGlobalLock
 )
 SELECT NewCode.* FROM (SELECT
-"N1351F" AS ProcCode,
+"N1351" AS ProcCode,
 "Missing Sealant - Sealant applied in previous treatment is missing." AS Descript,
 "Missing Sealant" AS AbbrDesc,
 "/X/" AS ProcTime,
