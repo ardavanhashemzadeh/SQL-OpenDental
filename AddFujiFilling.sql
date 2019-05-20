@@ -1,3 +1,6 @@
+-- INCOMPLETE, copypasted from previous query but needs major modifications!!!!!!!!!!
+
+
 SET @OldCode='D2940';
 SET @NewCode='D2940F';
 
