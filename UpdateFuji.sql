@@ -26,3 +26,7 @@ New.CanadaTimeUnits=Old.CanadaTimeUnits,
 New.IsRadiology=Old.IsRadiology,
 New.BypassGlobalLock=Old.BypassGlobalLock
 WHERE Old.ProcCode=@OldCode AND New.ProcCode=@NewCode;
+
+-- Inform OD of the change
+SET @DTS=(SELECT NOW());
+INSERT INTO signalod (DateViewing,SigDateTime,FKey,FKeyType,IType,RemoteRole,MsgValue) VALUES('0001-01-01',@DTS,0,'Undefined',4,0,'');
