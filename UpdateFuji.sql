@@ -4,7 +4,7 @@
 SET @OldCode='D2940';
 SET @NewCode='D2940F';
 
-UPDATE procedurecode AS OldTbl, procedurecode AS NewTbl
+UPDATE procedurecode AS Old, procedurecode AS New
 SET New.Descript="Filling - Fuji",
 New.AbbrDesc="Fill Fuji",
 New.ProcTime=Old.ProcTime,
