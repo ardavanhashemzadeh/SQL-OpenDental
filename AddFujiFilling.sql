@@ -1,7 +1,3 @@
--- INCOMPLETE, copypasted from previous query but needs major modifications!!!!!!!!!!
-
--- IN PROGRES!!!!!!!!!!!!!!!!!!!!!!!
-
 -- Update new code for "Fuji"
 SET @OldCode='D2940';
 SET @NewCode='D2940F';
