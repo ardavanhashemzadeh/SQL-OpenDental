@@ -1,7 +1,8 @@
 -- IN PROGRES!!!!!!!!!!!!!!!!!!!!!!!
 
 -- Update new code for "Fuji"
-
+SET @OldCode='D2940';
+SET @NewCode='D2940F';
 
 UPDATE procedurecode AS OldTbl, procedurecode AS NewTbl
 SET New.Descript="Filling - Fuji",
