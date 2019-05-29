@@ -1,6 +1,6 @@
 /* Ardavan Hashemzadeh
    May 29 2019
-   Show credit transactions for last month
+   Show patient payments for last month
 */
 SELECT paydate AS 'Date', itemname AS PaymentType, payamt AS 'Amount'
 FROM payment p JOIN definition d ON p.paytype=d.defnum
