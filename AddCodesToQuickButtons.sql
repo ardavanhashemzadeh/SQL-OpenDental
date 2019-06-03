@@ -39,9 +39,5 @@ SELECT @but2num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but2proc1 LI
 INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
 SELECT @but3num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but3proc1 LIMIT 1);
 
-SELECT d.ItemName AS Category, pb.Description, pc.proccode FROM procbuttonitem pbi
-JOIN procbutton pb ON pbi.procbuttonnum=pb.procbuttonnum
-JOIN definition d ON pb.category=d.defnum
-JOIN procedurecode pc ON pc.codenum=pbi.codenum
-WHERE d.itemname LIKE @category
-ORDER BY d.ItemName, pb.Description, pc.ProcCode;
+INSERT INTO procbuttonitem(ProcButtonNum, CodeNum)
+SELECT @but4num, (SELECT CodeNum FROM procedurecode WHERE ProcCode=@but4proc1 LIMIT 1);
