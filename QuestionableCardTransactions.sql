@@ -1,0 +1,11 @@
+-- Ardavan Hashemzadeh
+-- June 4th 2018
+-- Show number of card transactions with no note from past month
+-- Broken down by user and day
+
+SELECT paydate, itemname, payamt, username
+FROM payment p JOIN definition d ON p.paytype=d.defnum JOIN userod USING(usernum)
+WHERE paydate BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) and NOW()
+AND itemname LIKE "%credit%"
+GROUP BY paydate, username
+ORDER BY paydate DESC
