@@ -7,6 +7,6 @@ SELECT username, paydate, itemname, COUNT(*) AS 'Instances', SUM(PayAmt) AS 'Amo
 FROM payment p JOIN definition d ON p.paytype=d.defnum JOIN userod u ON p.SecUserNumEntry=u.usernum
 WHERE paydate BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) and NOW()
 AND itemname LIKE "%credit%"
-AND paynote IS NULL OR paynote = '';
+AND paynote IS NULL OR paynote = ''
 GROUP BY paydate, username
 ORDER BY paydate DESC
