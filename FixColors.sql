@@ -1,5 +1,8 @@
 -- Fix issues caused by blind automation
 
+-- Recon
+
+select proccode, abbrdesc, graphiccolor from procedurecode where graphiccolor<>0;
 
 -- Fix treat area of fillings
 UPDATE procedurecode SET TreatArea=1,PaintType=6 WHERE proccode IN ('D2940F', 'D2940', 'N2940');
