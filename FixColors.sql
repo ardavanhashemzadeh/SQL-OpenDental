@@ -5,7 +5,7 @@
 select proccode, abbrdesc, graphiccolor from procedurecode where graphiccolor<>0;
 
 -- Fix treat area of fillings
-UPDATE procedurecode SET TreatArea=1,PaintType=6 WHERE proccode IN ('D2940F', 'D2940', 'N2940');
+UPDATE procedurecode SET GraphicColor=-6291971 WHERE proccode IN ('D2940F', '1351F');
 
 
 -- Inform OD of the changes
