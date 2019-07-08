@@ -1,3 +1,11 @@
+-- EXP Patients with completed tx
+SELECT StartYear, COUNT(DISTINCT patnum) AS CompletedCases, SUM(InsPayAmt)+SUM(PayAmt) AS Total FROM procedurelog JOIN procedurecode USING(codenum) INNER JOIN (
+SELECT DISTINCT patnum, YEAR(procdate) AS StartYear FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")) Starts USING (patnum) LEFT JOIN payment USING(patnum) LEFT JOIN claim USING(patnum)
+WHERE procstatus=2 AND proccode="D8680"
+GROUP BY StartYear
+ORDER BY StartYear;
+
+
 -- Patients with Ortho Start Codes
 SELECT DISTINCT patnum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")
 
