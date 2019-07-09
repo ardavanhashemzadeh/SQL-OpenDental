@@ -9,6 +9,10 @@ SELECT * FROM Patient p JOIN FeeSched fs ON p.FeeSched=fs.FeeSchedNum LIMIT 10;
 -- Q2 SET @FromDate=’2018-04-01’, @ToDate=’2018-06-31’;
 -- Q3 SET @FromDate=’2018-07-01’, @ToDate=’2018-09-31’;
 -- Q4 SET @FromDate=’2018-10-01’, @ToDate=’2018-12-31’;
+SET @FromDate='2018-01-01', @ToDate='2018-12-31';
+SELECT COUNT(*) FROM (
+SELECT DISTINCT p.patnum, fs.description FROM procedurelog JOIN procedurecode USING(codenum) JOIN patient p USING(patnum) JOIN feesched fs ON p.feesched=fs.feeschednum WHERE procstatus=2 AND proccode IN ("D8060", "D8080", "D8090") AND procdate BETWEEN @FromDate AND @ToDate) a;
+
 
 -- Patients with complete tx
 SELECT StartYear, COUNT(starts.patnum) AS Starts, COUNT( FROM procedurelog JOIN procedurecode USING (codenum) JOIN (
