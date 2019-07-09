@@ -1,3 +1,15 @@
+SET @FromDate='2018-01-01', @ToDate='2018-12-31';
+SELECT FeeSchedule, COUNT(*) AS Starts FROM (
+SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
+  FROM procedurelog JOIN procedurecode USING(codenum)
+  JOIN patient p USING(patnum)
+  JOIN feesched fs ON p.feesched=fs.feeschednum
+  WHERE procstatus=2
+  AND proccode IN ("D8060", "D8080", "D8090")
+  AND procdate BETWEEN @FromDate AND @ToDate) a
+GROUP BY FeeSchedule
+
+
 -- FeeSched Recon
 SELECT * FROM FeeSched LIMIT 10;
 
