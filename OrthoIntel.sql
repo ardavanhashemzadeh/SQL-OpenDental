@@ -1,12 +1,23 @@
 SET @FromDate='2018-01-01', @ToDate='2018-12-31';
-SELECT FeeSchedule, COUNT(*) AS Starts FROM (
-SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
+SELECT Starts.FeeSchedule, COUNT(*) AS Starts FROM (
+  SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
   FROM procedurelog JOIN procedurecode USING(codenum)
   JOIN patient p USING(patnum)
   JOIN feesched fs ON p.feesched=fs.feeschednum
   WHERE procstatus=2
   AND proccode IN ("D8060", "D8080", "D8090")
-  AND procdate BETWEEN @FromDate AND @ToDate) a
+  AND procdate BETWEEN @FromDate AND @ToDate) Starts
+LEFT JOIN (
+  SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
+  FROM procedurelog JOIN procedurecode USING(codenum)
+  JOIN patient p USING(patnum)
+  JOIN feesched fs ON p.feesched=fs.feeschednum
+  WHERE procstatus=2
+  AND proccode="D8680") Debands
+USING(patnum)
+GROUP BY FeeSchedule
+
+  
 GROUP BY FeeSchedule
 
 
