@@ -1,4 +1,5 @@
 SET @FromDate='2018-01-01', @ToDate='2018-12-31';
+SELECT SUM(starts) FROM (
 SELECT Starts.FeeSchedule, COUNT(*) AS Starts FROM (
   SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
   FROM procedurelog JOIN procedurecode USING(codenum)
@@ -16,7 +17,7 @@ LEFT JOIN (
   AND proccode="D8680") Debands
 USING(patnum)
 GROUP BY FeeSchedule
-
+) test
   
 GROUP BY FeeSchedule
 
