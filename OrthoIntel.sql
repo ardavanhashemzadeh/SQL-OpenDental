@@ -4,6 +4,26 @@ SELECT * FROM FeeSched LIMIT 10;
 -- Link PT to FS Recon
 SELECT * FROM Patient p JOIN FeeSched fs ON p.FeeSched=fs.FeeSchedNum LIMIT 10;
 
+-- Patients with starts in a particular quarter
+-- Q1 SET @FromDate=’2018-01-01’, @ToDate=’2018-03-31’;
+-- Q2 SET @FromDate=’2018-04-01’, @ToDate=’2018-06-31’;
+-- Q3 SET @FromDate=’2018-07-01’, @ToDate=’2018-09-31’;
+-- Q4 SET @FromDate=’2018-10-01’, @ToDate=’2018-12-31’;
+
+-- Patients with complete tx
+SELECT StartYear, COUNT(starts.patnum) AS Starts, COUNT( FROM procedurelog JOIN procedurecode USING (codenum) JOIN (
+SELECT DISTINCT patnum, YEAR(procdate) AS StartYear FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")) Starts USING (patnum)
+WHERE procstatus=2 AND proccode="D8680"
+GROUP BY StartYear
+ORDER BY StartYear;
+
+
+-- FeeSched Recon
+SELECT * FROM FeeSched LIMIT 10;
+
+-- Link PT to FS Recon
+SELECT * FROM Patient p JOIN FeeSched fs ON p.FeeSched=fs.FeeSchedNum LIMIT 10;
+
 
 -- EXP Patients with completed tx
 SELECT StartYear, COUNT(DISTINCT patnum) AS CompletedCases, SUM(InsPayAmt)+SUM(PayAmt) AS Total FROM procedurelog JOIN procedurecode USING(codenum) INNER JOIN (
