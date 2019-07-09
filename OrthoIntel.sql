@@ -1,3 +1,10 @@
+-- FeeSched Recon
+SELECT * FROM FeeSched LIMIT 10;
+
+-- Link PT to FS Recon
+SELECT * FROM Patient p JOIN FeeSched fs ON p.FeeSched=fs.FeeSchedNum LIMIT 10;
+
+
 -- EXP Patients with completed tx
 SELECT StartYear, COUNT(DISTINCT patnum) AS CompletedCases, SUM(InsPayAmt)+SUM(PayAmt) AS Total FROM procedurelog JOIN procedurecode USING(codenum) INNER JOIN (
 SELECT DISTINCT patnum, YEAR(procdate) AS StartYear FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")) Starts USING (patnum) LEFT JOIN payment USING(patnum) LEFT JOIN claim USING(patnum)
