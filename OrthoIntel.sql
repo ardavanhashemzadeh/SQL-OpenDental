@@ -3,6 +3,7 @@
 SELECT Description, Amount, ProcCode
 FROM fee f LEFT JOIN feesched fs ON f.feesched=fs.feeschednum
 LEFT JOIN procedurecode USING(codenum)
+WHERE proccode LIKE "_8670"
 
 
 SELECT StartYear, StartQuarter, Starts.FeeSchedule, COUNT(Starts.patnum) AS Starts, COUNT(Debands.patnum) AS Completed
