@@ -1,9 +1,10 @@
 /* Ardavan Hashemzadeh */
 
-SELECT Description, Amount, ProcCode
+SELECT ProcCode, Amount, Description AS FeeSchedule
 FROM fee f LEFT JOIN feesched fs ON f.feesched=fs.feeschednum
 LEFT JOIN procedurecode USING(codenum)
 WHERE proccode LIKE "_8670"
+ORDER BY FeeSchedule
 
 
 SELECT StartYear, StartQuarter, Starts.FeeSchedule, COUNT(Starts.patnum) AS Starts, COUNT(Debands.patnum) AS Completed
