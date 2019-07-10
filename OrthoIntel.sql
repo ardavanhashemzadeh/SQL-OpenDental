@@ -1,3 +1,6 @@
+/* Ardavan Hashemzadeh */
+
+
 SELECT StartYear, StartQuarter, Starts.FeeSchedule, COUNT(Starts.patnum) AS Starts, COUNT(Debands.patnum) AS Completed
 FROM (
   SELECT DISTINCT p.patnum, fs.description AS FeeSchedule, YEAR(procdate) AS StartYear, QUARTER(procdate) AS StartQuarter
