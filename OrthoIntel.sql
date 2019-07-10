@@ -3,6 +3,14 @@
 SELECT ProcCode, Amount, Description AS FeeSchedule
 FROM fee f LEFT JOIN feesched fs ON f.feesched=fs.feeschednum
 LEFT JOIN procedurecode USING(codenum)
+JOIN (SELECT DISTINCT codenum FROM procedurecode WHERE procstatus=2) USING(codenum)
+ORDER BY FeeSchedule
+
+
+
+SELECT ProcCode, Amount, Description AS FeeSchedule
+FROM fee f LEFT JOIN feesched fs ON f.feesched=fs.feeschednum
+LEFT JOIN procedurecode USING(codenum)
 WHERE proccode LIKE "_8670"
 ORDER BY FeeSchedule
 
