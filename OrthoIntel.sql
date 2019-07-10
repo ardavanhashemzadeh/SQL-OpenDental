@@ -1,6 +1,6 @@
 /* Ardavan Hashemzadeh */
 
-SELECT ProcCode, Amount, Description AS FeeSchedule
+SELECT ProcCode, AbbrDescript, Amount, Description AS FeeSchedule
 FROM fee f LEFT JOIN feesched fs ON f.feesched=fs.feeschednum
 LEFT JOIN procedurecode USING(codenum)
 JOIN (SELECT DISTINCT codenum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2) CodesUsed USING(codenum)
