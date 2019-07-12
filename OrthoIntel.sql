@@ -1,5 +1,20 @@
 /* Ardavan Hashemzadeh */
 
+-- Patients with Ortho Start Codes
+SELECT DISTINCT patnum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")
+
+-- Count of patients with Ortho Start codes
+SELECT COUNT(DISTINCT patnum) FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")
+
+-- Patients with completed Ortho tx (based on code D8680)
+SELECT DISTINCT patnum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode="D8680"
+
+-- Count of patients with completed Ortho tx (based on code D8680)
+SELECT COUNT(DISTINCT patnum) FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode=”D8680”
+
+-- Starts by year
+SELECT DISTINCT patnum, YEAR(procdate) AS StartYear FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090") ORDER BY StartYear
+
 -- Fees for a particular code
 SELECT ProcCode, Amount, Description AS FeeSchedule
 FROM fee f LEFT JOIN feesched fs ON f.feesched=fs.feeschednum
@@ -540,8 +555,6 @@ ORDER BY StartYear;
 
 
 
--- Starts by year
-SELECT DISTINCT patnum, YEAR(procdate) AS StartYear FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090") ORDER BY StartYear
 
 
 
@@ -555,14 +568,3 @@ SELECT DISTINCT patnum, YEAR(procdate) AS StartYear FROM procedurelog JOIN proce
 
 
 
--- Patients with Ortho Start Codes
-SELECT DISTINCT patnum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")
-
--- Count of patients with Ortho Start codes
-SELECT COUNT(DISTINCT patnum) FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")
-
--- Patients with completed Ortho tx (based on code D8680)
-SELECT DISTINCT patnum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode="D8680"
-
--- Count of patients with completed Ortho tx (based on code D8680)
-SELECT COUNT(DISTINCT patnum) FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode=”D8680”
