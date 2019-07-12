@@ -1,5 +1,11 @@
 /* Ardavan Hashemzadeh */
 
+-- FeeSched Recon
+SELECT * FROM FeeSched LIMIT 10;
+
+-- Link PT to FS Recon
+SELECT * FROM Patient p JOIN FeeSched fs ON p.FeeSched=fs.FeeSchedNum LIMIT 10;
+
 -- Patients with Ortho Start Codes
 SELECT DISTINCT patnum FROM procedurelog JOIN procedurecode USING(codenum) WHERE procstatus=2 AND proccode IN ("INVSR", "INVSX", "D8060", "D8080", "D8090")
 
@@ -68,52 +74,6 @@ LEFT JOIN (
 USING(patnum)
 GROUP BY FeeSchedule
 
-SET @FromDate='2018-01-01', @ToDate='2018-12-31';
-SELECT SUM(starts) FROM (
-SELECT Starts.FeeSchedule, COUNT(*) AS Starts FROM (
-  SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
-  FROM procedurelog JOIN procedurecode USING(codenum)
-  JOIN patient p USING(patnum)
-  JOIN feesched fs ON p.feesched=fs.feeschednum
-  WHERE procstatus=2
-  AND proccode IN ("D8060", "D8080", "D8090")
-  AND procdate BETWEEN @FromDate AND @ToDate) Starts
-LEFT JOIN (
-  SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
-  FROM procedurelog JOIN procedurecode USING(codenum)
-  JOIN patient p USING(patnum)
-  JOIN feesched fs ON p.feesched=fs.feeschednum
-  WHERE procstatus=2
-  AND proccode="D8680") Debands
-USING(patnum)
-GROUP BY FeeSchedule
-) test
-  
-
-SET @FromDate='2018-01-01', @ToDate='2018-12-31';
-SELECT Starts.FeeSchedule, COUNT(*) AS Starts FROM (
-  SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
-  FROM procedurelog JOIN procedurecode USING(codenum)
-  JOIN patient p USING(patnum)
-  JOIN feesched fs ON p.feesched=fs.feeschednum
-  WHERE procstatus=2
-  AND proccode IN ("D8060", "D8080", "D8090")
-  AND procdate BETWEEN @FromDate AND @ToDate) Starts
-LEFT JOIN (
-  SELECT DISTINCT p.patnum, fs.description AS FeeSchedule
-  FROM procedurelog JOIN procedurecode USING(codenum)
-  JOIN patient p USING(patnum)
-  JOIN feesched fs ON p.feesched=fs.feeschednum
-  WHERE procstatus=2
-  AND proccode="D8680") Debands
-USING(patnum)
-GROUP BY FeeSchedule
-
--- FeeSched Recon
-SELECT * FROM FeeSched LIMIT 10;
-
--- Link PT to FS Recon
-SELECT * FROM Patient p JOIN FeeSched fs ON p.FeeSched=fs.FeeSchedNum LIMIT 10;
 
 -- Patients with starts in a particular quarter
 -- Q1 SET @FromDate=’2018-01-01’, @ToDate=’2018-03-31’;
